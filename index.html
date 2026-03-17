@@ -12,7 +12,7 @@
   <!-- OG 미리보기 -->
   <meta property="og:title" content="민에이아이아트 세미나 알림">
   <meta property="og:description" content="매주 목요일 오후 10:00 · Zoom 온라인 · 무료 참가">
-  <meta property="og:image" content="https://i.imgur.com/VLmWj4b.jpeg">
+  <meta property="og:image" content="https://i.imgur.com/9SXsGYp.jpeg">
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -330,7 +330,7 @@
 
   <!-- 히어로 이미지 -->
   <div class="card" style="padding:0;overflow:hidden;">
-    <img src="https://i.imgur.com/VLmWj4b.jpeg"
+    <img src="https://i.imgur.com/9SXsGYp.jpeg"
          alt="민에이아이아트 세미나"
          class="hero-image"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -383,12 +383,19 @@
     <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:8px;">참가비 무료 · 참가자에게만 솔루션 제공</p>
   </section>
 
-  <!-- 달력 섹션 (동적 렌더링) -->
+  <!-- 달력 섹션 (토글) -->
   <section class="card" style="padding:20px;">
-    <h2 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;">📅 매주 목요일 정기 세미나</h2>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;">특정 날짜가 아닌 <strong style="color:var(--accent);">매주 반복</strong>되는 정기 업무입니다. 매달 목요일마다 지속 진행됩니다.</p>
-    <div class="cal-grid" id="cal-grid"></div>
-    <p id="cal-label" style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px;"></p>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <h2 style="font-size:15px;font-weight:700;color:var(--text);margin:0;">📅 매주 목요일 정기 세미나</h2>
+      <button id="cal-toggle-btn" onclick="toggleCalendar()" style="display:flex;align-items:center;gap:5px;background:rgba(91,94,247,0.08);border:1px solid rgba(91,94,247,0.25);border-radius:999px;padding:5px 12px;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:'Noto Sans KR',sans-serif;">
+        <span id="cal-toggle-label">달력 보기</span>
+        <svg id="cal-toggle-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform 0.25s;"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div id="cal-body" style="display:none;margin-top:14px;">
+      <div class="cal-grid" id="cal-grid"></div>
+      <p id="cal-label" style="text-align:center;font-size:12px;color:var(--muted);margin-top:10px;"></p>
+    </div>
   </section>
 
   <!-- 회원/비회원 안내 -->
@@ -628,7 +635,18 @@ function renderCalendar() {
     `이번 달 목요일: ${thurStr} · 매달 반복 진행 · 오후 10:00~11:00`;
 }
 
-// ── 탭 전환 ──────────────────────────────────────────────────────
+// ── 달력 토글 ────────────────────────────────────────────────────
+function toggleCalendar() {
+  const body = document.getElementById('cal-body');
+  const label = document.getElementById('cal-toggle-label');
+  const icon = document.getElementById('cal-toggle-icon');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  label.textContent = isOpen ? '달력 보기' : '달력 닫기';
+  icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
